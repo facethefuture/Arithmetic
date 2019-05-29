@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <button onclick="test()">测试</button><br/>
+    <button onclick="test2()">测试proxy</button>
+<!--    <div><button onclick="arithmetic">冒泡排序</button></div>-->
+</div>
+<script>
+    let constants = null;
+    let arithmetic = null;
+</script>
+
+<!--<script type="text/javascript" src="./utils.js">-->
+<!--</script>-->
+
+<script type="module">
+   import * as all from './utils2.js'
+    console.log(all.hellow())
+    console.log(all.work())
+   constants = all;
+</script>
+
+<script type="text/javascript">
+    function test(){
+        console.log('test')
+        // constants.hellow()
+        // calculate()
+        import('./utils.js').then(({calculate}) => {
+            console.log(calculate())
+        }).catch((err) => {
+            console.log(err)
+        })
+        console.log(constants.count)
+        console.log(constants.commonJS()    )
+    }
+    let proxy = null;
+    function test2(){
+        console.log(proxy.name)
+        Reflect.set(proxy,'name','小明')
+    }
+
+
+</script>
+<script type="module">
+    import {proxyStudent} from './proxy.js'
+    import {bubbleSort,insertionSort} from './arithmetic.js'
+    proxy = proxyStudent
+    arithmetic = bubbleSort([11,33,3,1,4,2,9,6,7,8,5])
+    let insertion = insertionSort([11,33,3,1,4,2,9,6,7,8,5])
+</script>
+<!--commonJS测试-->
+
+<!--<script type="module">-->
+<!--    import {framework} from './commonJS.js'-->
+<!--    framework()-->
+<!--</script>-->
+
+<!--<script type="module">-->
+<!--    let framework = require('./commonJS')-->
+<!--    framework.framework()-->
+
+<!--</script>-->
+</body>
+</html>
